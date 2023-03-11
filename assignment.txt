@@ -1,0 +1,96 @@
+# Overview
+
+ 
+
+For integration between ISS Jira and Megacorp, the task is to develop 1 independent listener to send webhooks to Megacorp API.
+
+ 
+
+# Security
+
+ 
+
+## Authorization
+
+ 
+
+Authorization versus API will be made with API Token.
+
+With the user, a 30-day 'access token' can be requested with API calls. The token must be stored on the Jira server file layer.
+
+Script listener must be executed as 'JIRA-SA-PROD-MEGACORP-API'.
+
+ 
+
+## File security
+
+ 
+
+Full permission to the created token(file) is only granted to a service user.
+
+Other accesses to this file are permitted.
+
+ 
+
+# Request specification
+
+ 
+
+- Method: `GET`
+
+* Endpoint: https://webhook.site/
+
+* Token: [generate random string]
+
+* LoopNumber: 5
+
+* Payload:
+
+```json
+
+{
+
+   "RequestID":"14",
+
+   "Reporter":"adam.nowak",
+
+   "Title":"Megacorp rate limit",
+
+   "Attempt":"1",
+
+   "Details":{
+
+      "RequestDate":"12/12/2023-1623",
+
+      "Requestor":"webhook-user"
+
+   }
+
+}
+
+```
+
+ 
+
+ 
+
+## Flow
+
+ 
+
+-   Get API token from a text file
+
+-   Check if token is valid(simulate, that initially is wrong)
+
+    - send a request with token generation
+
+    - use a new token
+
+-   Repeat until '"LoopNumber": 0'
+
+    -  `GET` webhook to Megacorp API with JSON payload
+
+    - inject filed: "RequestDate", with the current date, in the following format `dd/mm/yyyy-hhmm`
+
+    - inject filed: "Attempt", with iteration number
+    
