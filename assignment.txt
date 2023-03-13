@@ -79,13 +79,13 @@ Other accesses to this file are permitted.
 
 MY COMMENTS:
 
-- no API key provided in assingment therefore it's impossible to make request for new token
+- no API key provided in assignment therefore it's impossible to make request for new token
 - token validation is made on API Server Side not on Client Side so "Check if token is valid(simulate, that initially is wrong)" makes no sense to me
 - `GET` webhook to Megacorp API with JSON payload -> overriding POST request with "X-HTTP-Method-Override: GET" ??
 
 MY FLOW: 
 
-- check if API token is present on clinet side (Jira server) in predefined location
+- check if API token is present on client side (Jira server) in predefined location
 - if token is present in location make validation request (separate endpoint)
 - if server returns "498 Invalid Token" make request to API (API key needs to be provided) for new 30-day token
 - if token is valid, make request as follows:
