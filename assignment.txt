@@ -1,18 +1,11 @@
 # Overview
 
- 
-
 For integration between ISS Jira and Megacorp, the task is to develop 1 independent listener to send webhooks to Megacorp API.
-
- 
 
 # Security
 
- 
 
 ## Authorization
-
- 
 
 Authorization versus API will be made with API Token.
 
@@ -20,21 +13,15 @@ With the user, a 30-day 'access token' can be requested with API calls. The toke
 
 Script listener must be executed as 'JIRA-SA-PROD-MEGACORP-API'.
 
- 
 
 ## File security
-
- 
 
 Full permission to the created token(file) is only granted to a service user.
 
 Other accesses to this file are permitted.
 
  
-
 # Request specification
-
- 
 
 - Method: `GET`
 
@@ -70,13 +57,7 @@ Other accesses to this file are permitted.
 
 ```
 
- 
-
- 
-
 ## Flow
-
- 
 
 -   Get API token from a text file
 
@@ -93,4 +74,3 @@ Other accesses to this file are permitted.
     - inject filed: "RequestDate", with the current date, in the following format `dd/mm/yyyy-hhmm`
 
     - inject filed: "Attempt", with iteration number
-    
