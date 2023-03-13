@@ -87,9 +87,9 @@ MY COMMENTS:
 
 MY FLOW: 
 
-- check if API token is present on client side (Jira server) in predefined location
-- if token is present in location make validation request
-- if server returns "498 Invalid Token" make request to API (API key needs to be provided) for new 30-day token
+- check if API token is present on client side (Jira server) in predefined location (in production: database)
+- if token is present in location make validation request (in production: separate endpoint)
+- if server returns "498 Invalid Token" or "419 Page Expired" make request to API (API key needs to be provided) for new 30-day token
 - if token is valid, make request as follows:
 
    Repeat until '"LoopNumber": 0'
