@@ -83,6 +83,7 @@ MY COMMENTS:
 - [Authorization] no API key provided in assignment therefore it's impossible to make request for new token
 - [Flow] token validation is made on API Server Side not on Client Side so "Check if token is valid(simulate, that initially is wrong)" makes no sense to me
 - [Flow] `GET` webhook to Megacorp API with JSON payload -> overriding POST request with "X-HTTP-Method-Override: GET" ??
+- [File security] I assume that token txt file is stored in Jira home directory which is probably secured by password
 
 MY FLOW: 
 
