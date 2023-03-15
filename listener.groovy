@@ -16,6 +16,7 @@ class Listener {
     }'''
 
     int loop_number = 5
+    String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
 
     def currentDateAndTime() {
         Date date = new Date()
@@ -32,7 +33,7 @@ class Listener {
 
     def get() {
         try {
-            def webhookGet = new URL('https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea')
+            def webhookGet = new URL(url)
             def connection = webhookGet.openConnection()
             connection.setRequestMethod('POST')
             connection.setDoOutput(true)
