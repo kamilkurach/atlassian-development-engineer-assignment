@@ -11,7 +11,7 @@ class Listener {
         return date.format('dd/MM/YYYY-hhmm')
     }
 
-    def update_json(attempt, date) {
+    def updatePayload(attempt, date) {
         def json = JsonOutput.toJson(
           [requestID:'14',
           reporter:'adam.nowak',
@@ -43,7 +43,7 @@ class Listener {
     static void main(String[] args) {
         Listener l = new Listener()
         for (int i = 0; i < l.loop_number; i++) {
-            l.update_json(i + 1, l.currentDateAndTime())
+            l.updatePayload(i + 1, l.currentDateAndTime())
             l.get()
         }
     }
