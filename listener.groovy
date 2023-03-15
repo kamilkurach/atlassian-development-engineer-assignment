@@ -17,7 +17,7 @@ class Listener {
 
     int loop_number = 5
 
-    def getCurrentDateAndTime() {
+    def currentDateAndTime() {
         Date date = new Date()
         return date.format('dd/MM/YYYY-hhmm')
     }
@@ -52,7 +52,7 @@ class Listener {
     static void main(String[] args) {
         Listener l = new Listener()
         for (int i = 0; i < l.loop_number; i++) {
-            l.payload = l.update_json(l.payload, i + 1, l.getCurrentDateAndTime())
+            l.payload = l.update_json(l.payload, i + 1, l.currentDateAndTime())
             l.get()
         }
     }
