@@ -1,23 +1,18 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+
 class Listener {
 
-    String payload = '''{
-
-        "RequestID":"14",
-
-        "Reporter":"adam.nowak",
-
-        "Title":"Megacorp rate limit",
-
-        "Attempt":"1",
-
-        "Details": {
-
-            "RequestDate":"12/12/2023-1623",
-
-            "Requestor":"webhook-user"
-
+    String payload = '''
+    {
+        "requestID":"14",
+        "reporter":"adam.nowak",
+        "title":"Megacorp rate limit",
+        "attempt":"1",
+        "details": {
+            "requestDate":"12/12/2023-1623",
+            "requestor":"webhook-user"
         }
-
     }'''
 
     int loop_number = 5
@@ -25,6 +20,14 @@ class Listener {
     def getCurrentDateAndTime() {
         Date date = new Date()
         return date.format("dd/MM/YYYY-hhmm")
+    }
+
+    def update_json(payload, attempt, date) {
+        def slurped = new JsonSlurper().parseText(payload)
+        def builder = new JsonBuilder(slurped)
+        builder.content.attempt = attempt
+        builder.content.details.requestDate = date
+        return builder.toPrettyString()
     }
 
     def get() {
@@ -47,8 +50,9 @@ class Listener {
     }
 
     static void main(String[] args) {
-        Listener l = new Listener()
+        Listener l = new Listener()    
         for(int i = 0; i < l.loop_number; i++) {
+            l.payload = l.update_json(l.payload, i+1, l.getCurrentDateAndTime())
             l.get()
         }
     }
