@@ -12,4 +12,6 @@
 
 `cd ./atlassian-development-engineer-assignment`
 
+`python3 flask-jwt-server.py`
+
 `groovy listener.groovy`
