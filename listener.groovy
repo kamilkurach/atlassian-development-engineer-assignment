@@ -1,20 +1,8 @@
-import groovy.json.JsonBuilder
-import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
 
 class Listener {
 
-    String payload = '''
-    {
-        "requestID":"14",
-        "reporter":"adam.nowak",
-        "title":"Megacorp rate limit",
-        "attempt":"1",
-        "details": {
-            "requestDate":"12/12/2023-1623",
-            "requestor":"webhook-user"
-        }
-    }'''
-
+    def payload
     int loop_number = 5
     String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
 
@@ -23,12 +11,14 @@ class Listener {
         return date.format('dd/MM/YYYY-hhmm')
     }
 
-    def update_json(payload, attempt, date) {
-        def slurped = new JsonSlurper().parseText(payload)
-        def builder = new JsonBuilder(slurped)
-        builder.content.attempt = attempt
-        builder.content.details.requestDate = date
-        return builder.toPrettyString()
+    def update_json(attempt, date) {
+        def json = JsonOutput.toJson(
+          [requestID:'14',
+          reporter:'adam.nowak',
+          title:'Megacorp rate limit',
+          attempt: attempt,
+          details: [requestDate: date, requestor: 'webhook-user']])
+        payload = JsonOutput.prettyPrint(json)
     }
 
     def get() {
@@ -53,7 +43,7 @@ class Listener {
     static void main(String[] args) {
         Listener l = new Listener()
         for (int i = 0; i < l.loop_number; i++) {
-            l.payload = l.update_json(l.payload, i + 1, l.currentDateAndTime())
+            l.update_json(i + 1, l.currentDateAndTime())
             l.get()
         }
     }
