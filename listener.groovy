@@ -19,7 +19,7 @@ class Listener {
 
     def getCurrentDateAndTime() {
         Date date = new Date()
-        return date.format("dd/MM/YYYY-hhmm")
+        return date.format('dd/MM/YYYY-hhmm')
     }
 
     def update_json(payload, attempt, date) {
@@ -34,26 +34,27 @@ class Listener {
         try {
             def webhookGet = new URL('https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea')
             def connection = webhookGet.openConnection()
-            connection.setRequestMethod("POST")
+            connection.setRequestMethod('POST')
             connection.setDoOutput(true)
-            connection.setRequestProperty("Content-Type", "application/json")
-            connection.setRequestProperty("X-HTTP-Method-Override", "GET")
+            connection.setRequestProperty('Content-Type', 'application/json')
+            connection.setRequestProperty('X-HTTP-Method-Override', 'GET')
             connection.with {
                 outputStream.withWriter { outputStreamWriter ->
                     outputStreamWriter << payload
                 }
             }
-            println("GET " + connection.responseCode);
-        } catch(Exception ex) {
-            println(ex);
+            println('GET ' + connection.responseCode)
+        } catch (Exception ex) {
+            println(ex)
         }
     }
 
     static void main(String[] args) {
-        Listener l = new Listener()    
-        for(int i = 0; i < l.loop_number; i++) {
-            l.payload = l.update_json(l.payload, i+1, l.getCurrentDateAndTime())
+        Listener l = new Listener()
+        for (int i = 0; i < l.loop_number; i++) {
+            l.payload = l.update_json(l.payload, i + 1, l.getCurrentDateAndTime())
             l.get()
         }
     }
+
 }
