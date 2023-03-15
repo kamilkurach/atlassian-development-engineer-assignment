@@ -22,6 +22,11 @@ class Listener {
 
     int loop_number = 5
 
+    def getCurrentDateAndTime() {
+        Date date = new Date()
+        return date.format("dd/MM/YYYY-hhmm")
+    }
+
     def get() {
         try {
             def webhookGet = new URL('https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea')
