@@ -1,5 +1,4 @@
 import groovy.json.JsonOutput
-import java.nio.file.Files
 import groovy.json.JsonSlurper
 
 class Listener {
@@ -16,7 +15,7 @@ class Listener {
     def createTokenDir() {
         File f = new File(token_directory)
         if (!f.exists()) {
-            println "Creating directory.."
+            println 'Creating directory..'
             def tree = new FileTreeBuilder()
             tree.dir(token_directory)
         }
@@ -25,7 +24,7 @@ class Listener {
     def saveToken(json) {
         File f = new File(token_directory)
         if (f.exists()) {
-            println "Saving token.."
+            println 'Saving token..'
             new File(token_path).write(json)
         }
     }
@@ -33,7 +32,7 @@ class Listener {
     def readTokenFromFile() {
         File f = new File(token_directory)
         if (f.exists()) {
-            println "Reading token.."
+            println 'Reading token..'
             def jsonSlurper = new JsonSlurper()
             def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
@@ -41,12 +40,12 @@ class Listener {
     }
 
     def requestNewToken() {
-        println "Requesting token.."
+        println 'Requesting token..'
         token_json = JsonOutput.toJson([token: 'test', user: 'adam.nowak', created: '', exp: ''])
     }
 
     def validateToken() {
-        println "Validating token.."
+        println 'Validating token..'
         isTokenValid = false
     }
 
@@ -102,7 +101,8 @@ class Listener {
                 l.get()
             }
         } else {
-            println "Invalid Token.."
+            println 'Invalid Token..'
         }
     }
+
 }
