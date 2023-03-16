@@ -15,6 +15,7 @@ class Listener {
     def createTokenDir() {
         File f = new File(token_directory)
         if (!f.exists()) {
+            println "Creating directory.."
             def tree = new FileTreeBuilder()
             tree.dir(token_directory)
         }
@@ -23,6 +24,7 @@ class Listener {
     def saveToken(json) {
         File f = new File(token_directory)
         if (f.exists()) {
+            println "Saving token.."
             new File(token_path).write(json)
         }
     }
@@ -30,6 +32,7 @@ class Listener {
     def readTokenFromFile() {
         File f = new File(token_directory)
         if (f.exists()) {
+            println "Reading token.."
             def jsonSlurper = new JsonSlurper()
             def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
