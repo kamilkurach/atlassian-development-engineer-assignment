@@ -1,0 +1,28 @@
+body {
+    background-color: rgb(19, 119, 119);
+}
+
+p {
+    color: rgb(246, 183, 35);
+}
+
+blink {
+    animation: 5s linear infinite condemned_blink_effect;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes condemned_blink_effect {
+    0% {
+        visibility: hidden;
+    }
+
+    50% {
+        visibility: hidden;
+    }
+
+    100% {
+        visibility: visible;
+    }
+}
