@@ -3,8 +3,18 @@ import groovy.json.JsonOutput
 class Listener {
 
     def payload
+    def token_json = JsonOutput.toJson([token: 'test', reporter: "adam.nowak", created: '', exp: '']) 
     int loop_number = 5
     String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
+
+    def createTokenDir() {
+        def tree = new FileTreeBuilder()
+        tree.dir('tmp')
+    }
+
+    def saveToken(json) { 
+        new File("tmp/token.json").write(json)
+    }
 
     def currentDateAndTime() {
         Date date = new Date()
@@ -42,6 +52,8 @@ class Listener {
 
     static void main(String[] args) {
         Listener l = new Listener()
+        l.createTokenDir()
+        l.saveToken(l.token_json)
         for (int i = 0; i < l.loop_number; i++) {
             l.updatePayload(i + 1, l.currentDateAndTime())
             l.get()
