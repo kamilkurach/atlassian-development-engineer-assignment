@@ -5,19 +5,20 @@ class Listener {
 
     def payload
     def token_json = JsonOutput.toJson([token: 'test', reporter: 'adam.nowak', created: '', exp: ''])
+    String token_directory = 'tmp'
     int loop_number = 5
     String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
 
     def createTokenDir() {
-        File f = new File('tmp')
+        File f = new File(token_directory)
         if (!f.exists()) {
             def tree = new FileTreeBuilder()
-            tree.dir('tmp')
+            tree.dir(token_directory)
         }
     }
 
     def saveToken(json) {
-        File f = new File('tmp')
+        File f = new File(token_directory)
         if (f.exists()) {
             new File('tmp/token.json').write(json)
         }
