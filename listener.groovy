@@ -1,19 +1,26 @@
 import groovy.json.JsonOutput
+import java.nio.file.Files
 
 class Listener {
 
     def payload
-    def token_json = JsonOutput.toJson([token: 'test', reporter: "adam.nowak", created: '', exp: '']) 
+    def token_json = JsonOutput.toJson([token: 'test', reporter: 'adam.nowak', created: '', exp: ''])
     int loop_number = 5
     String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
 
     def createTokenDir() {
-        def tree = new FileTreeBuilder()
-        tree.dir('tmp')
+        File f = new File('tmp')
+        if (!f.exists()) {
+            def tree = new FileTreeBuilder()
+            tree.dir('tmp')
+        }
     }
 
-    def saveToken(json) { 
-        new File("tmp/token.json").write(json)
+    def saveToken(json) {
+        File f = new File('tmp')
+        if (f.exists()) {
+            new File('tmp/token.json').write(json)
+        }
     }
 
     def currentDateAndTime() {
