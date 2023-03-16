@@ -8,6 +8,7 @@ class Listener {
     def token_json = JsonOutput.toJson([token: 'test', user: 'adam.nowak', created: '', exp: ''])
     def test_token
     String token_directory = 'tmp'
+    String token_path = 'tmp/token.json'
     int loop_number = 5
     String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
 
@@ -22,7 +23,7 @@ class Listener {
     def saveToken(json) {
         File f = new File(token_directory)
         if (f.exists()) {
-            new File('tmp/token.json').write(json)
+            new File(token_path).write(json)
         }
     }
 
@@ -30,7 +31,7 @@ class Listener {
         File f = new File(token_directory)
         if (f.exists()) {
             def jsonSlurper = new JsonSlurper()
-            def data = jsonSlurper.parse(new File('tmp/token.json'))
+            def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
         }
     }
