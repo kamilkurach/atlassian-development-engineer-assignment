@@ -12,6 +12,6 @@
 
 `cd ./atlassian-development-engineer-assignment`
 
-`python3 flask-jwt-server.py`
+`python3 flask-jwt-server.py` -> under construction (not required in task but making request to working endpoint makes more sense)
 
 `groovy listener.groovy`
