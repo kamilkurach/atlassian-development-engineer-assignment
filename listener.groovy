@@ -5,12 +5,13 @@ import groovy.json.JsonSlurper
 class Listener {
 
     def payload
-    def token_json = JsonOutput.toJson([token: 'test', user: 'adam.nowak', created: '', exp: ''])
+    def token_json
     def test_token
     String token_directory = 'tmp'
     String token_path = 'tmp/token.json'
     int loop_number = 5
     String url = 'https://webhook.site/76660e37-06fb-48bb-9ce6-5de86bbb73ea'
+    Boolean isTokenValid = false
 
     def createTokenDir() {
         File f = new File(token_directory)
@@ -37,6 +38,16 @@ class Listener {
             def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
         }
+    }
+
+    def requestNewToken() {
+        println "Requesting token.."
+        token_json = JsonOutput.toJson([token: 'test', user: 'adam.nowak', created: '', exp: ''])
+    }
+
+    def validateToken() {
+        println "Validating token.."
+        isTokenValid = false
     }
 
     def currentDateAndTime() {
@@ -75,13 +86,23 @@ class Listener {
 
     static void main(String[] args) {
         Listener l = new Listener()
-        l.createTokenDir()
-        l.saveToken(l.token_json)
         l.readTokenFromFile()
-        for (int i = 0; i < l.loop_number; i++) {
-            l.updatePayload(i + 1, l.currentDateAndTime())
-            l.get()
+        l.validateToken()
+        if (l.isTokenValid == false) {
+            l.requestNewToken()
+            l.createTokenDir()
+            l.saveToken(l.token_json)
+            l.readTokenFromFile()
+            l.validateToken()
+            l.isTokenValid = true
+        }
+        if (l.isTokenValid == true) {
+            for (int i = 0; i < l.loop_number; i++) {
+                l.updatePayload(i + 1, l.currentDateAndTime())
+                l.get()
+            }
+        } else {
+            println "Invalid Token.."
         }
     }
-
 }
