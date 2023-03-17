@@ -6,7 +6,7 @@ class Listener {
     def payload
     def token_json
     def test_token
-    def api_key = '00000000-0000-0000-0000-000000000001'
+    def api_key = '00000000-0000-0000-0000-000000000000'
     String token_directory = 'tmp'
     String token_path = 'tmp/token.json'
     int loop_number = 5
