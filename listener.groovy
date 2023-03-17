@@ -28,7 +28,7 @@ class Listener {
             if (json != null) {
                 new File(token_path).write(json)
             } else {
-                println "Missing token data!"
+                println 'Missing token data!'
             }
         }
     }
@@ -40,7 +40,7 @@ class Listener {
             def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
         } else {
-                println "Missing token data!"
+            println 'Missing token data!'
         }
     }
 
