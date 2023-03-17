@@ -6,7 +6,7 @@ class Listener {
     def payload
     def token_json
     def test_token
-    def api_key = '00000000-0000-0000-0000-000000000000'
+    def api_key = '00000000-0000-0000-0000-000000000001'
     String token_directory = 'tmp'
     String token_path = 'tmp/token.json'
     int loop_number = 5
@@ -23,21 +23,24 @@ class Listener {
     }
 
     def saveToken(json) {
-        File f = new File(token_directory)
-        if (f.exists()) {
+        if (new File(token_directory).exists()) {
             println 'Saving token..'
-            new File(token_path).write(json)
+            if (json != null) {
+                new File(token_path).write(json)
+            } else {
+                println "Missing token data!"
+            }
         }
     }
 
     def readTokenFromFile() {
-        File f = new File(token_directory)
-        if (f.exists()) {
+        if (new File(token_directory).exists() && new File(token_path).exists()) {
             println 'Reading token..'
             def jsonSlurper = new JsonSlurper()
             def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
-            println test_token
+        } else {
+                println "Missing token data!"
         }
     }
 
