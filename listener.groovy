@@ -6,6 +6,7 @@ class Listener {
     def payload
     def token_json
     def test_token
+    def api_key = '00000000-0000-0000-0000-000000000000'
     String token_directory = 'tmp'
     String token_path = 'tmp/token.json'
     int loop_number = 5
@@ -36,12 +37,23 @@ class Listener {
             def jsonSlurper = new JsonSlurper()
             def data = jsonSlurper.parse(new File(token_path))
             test_token = JsonOutput.toJson(data)
+            println test_token
         }
     }
 
     def requestNewToken() {
         println 'Requesting token..'
-        token_json = JsonOutput.toJson([token: 'test', user: 'adam.nowak', created: '', exp: ''])
+        try {
+            def webhookGet = new URL('http://127.0.0.1:5000/token')
+            def connection = webhookGet.openConnection()
+            connection.setRequestMethod('POST')
+            connection.setRequestProperty('Content-Type', 'application/json')
+            connection.setRequestProperty('X-Api-Key', api_key)
+            token_json = JsonOutput.prettyPrint(connection.getInputStream().getText())
+            println('POST ' + connection.responseCode)
+        } catch (Exception ex) {
+            println(ex)
+        }
     }
 
     def validateToken() {
