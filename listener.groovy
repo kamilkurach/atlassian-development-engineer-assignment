@@ -46,8 +46,8 @@ class Listener {
     def requestNewToken() {
         println 'Requesting token..'
         try {
-            def webhookGet = new URL('http://127.0.0.1:5000/token')
-            def connection = webhookGet.openConnection()
+            def newTokenPost = new URL('http://127.0.0.1:5000/token')
+            def connection = newTokenPost.openConnection()
             connection.setRequestMethod('POST')
             connection.setRequestProperty('Content-Type', 'application/json')
             connection.setRequestProperty('X-Api-Key', api_key)
