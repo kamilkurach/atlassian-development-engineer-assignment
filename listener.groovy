@@ -5,7 +5,6 @@ class Listener {
 
     def payload
     def token_json
-    def test_token
     def api_key = '00000000-0000-0000-0000-000000000000'
     String token_directory = 'tmp'
     String token_path = 'tmp/token.json'
@@ -38,7 +37,7 @@ class Listener {
             println 'Reading token..'
             def jsonSlurper = new JsonSlurper()
             def data = jsonSlurper.parse(new File(token_path))
-            test_token = JsonOutput.toJson(data)
+            token_json = JsonOutput.toJson(data)
         } else {
             println 'Missing token data!'
         }
