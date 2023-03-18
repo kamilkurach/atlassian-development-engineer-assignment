@@ -61,7 +61,26 @@ class Listener {
 
     def validateToken() {
         println 'Validating token..'
-        isTokenValid = false
+        def object
+        try {
+            def validateGet = new URL('http://127.0.0.1:5000/validate')
+            def connection = validateGet.openConnection()
+            if (token_json != null) {
+                def jsonSlurper = new JsonSlurper()
+                object = jsonSlurper.parseText(token_json)
+                connection.setRequestProperty('Authorization', 'Bearer ' + object.token)
+            }
+            connection.setRequestProperty('Content-Type', 'application/json')
+            connection.setRequestMethod('GET')
+            println('GET ' + connection.responseCode)
+            if (connection.responseCode == 200) {
+                isTokenValid = true
+            } else {
+                isTokenValid = false
+            }
+        } catch (Exception ex) {
+            println(ex)
+        }
     }
 
     def currentDateAndTime() {
@@ -108,7 +127,6 @@ class Listener {
             l.saveToken(l.token_json)
             l.readTokenFromFile()
             l.validateToken()
-            l.isTokenValid = true
         }
         if (l.isTokenValid == true) {
             for (int i = 0; i < l.loop_number; i++) {
